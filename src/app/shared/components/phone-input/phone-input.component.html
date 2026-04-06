@@ -1,0 +1,95 @@
+<div
+  class="flex items-center -space-x-px border"
+  [class.border-gray-200]="!isInValid"
+  [class.border-red-600]="isInValid"
+>
+  <button
+    id="dropdown-phone-button"
+    data-dropdown-toggle="dropdown-phone"
+    type="button"
+    class="inline-flex items-center shrink-0 z-10 text-body hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary font-medium leading-5 text-sm px-4 py-2.5 focus:outline-none"
+  >
+    <div>
+      <img class="w-6 mr-2" [src]="selectedCountry.flag" alt="" />
+    </div>
+    <span class="text-gray-950 font-gMono"
+      >{{ selectedCountry.shortName }}({{ selectedCountry.code }})</span
+    >
+    <span class="text-gray-950">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="lucide lucide-chevrons-up-down-icon lucide-chevrons-up-down"
+      >
+        <path d="m7 15 5 5 5-5" />
+        <path d="m7 9 5-5 5 5" />
+      </svg>
+    </span>
+  </button>
+  <div
+    id="dropdown-phone"
+    class="z-10 bg-neutral-primary-medium border border-default-medium rounded-base shadow-lg w-54"
+    [class.hidden]="!isListOpen"
+    style="
+      position: absolute;
+      inset: 0px auto auto 0px;
+      margin: 0px;
+      transform: translate3d(876.8px, 445.6px, 0px);
+    "
+  >
+    <ul class="p-2 text-sm text-body font-medium" aria-labelledby="dropdown-phone-button">
+      <li class="cursor-pointer" (click)="selectCountry('Palestine')">
+        <div
+          class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded-md"
+        >
+          <img class="w-6 mr-2 rounded-full" src="Images/Flags/flag-palestine.png" alt="" />
+          <div>Palestine (+970)</div>
+        </div>
+      </li>
+      <li class="cursor-pointer" (click)="selectCountry('Syria')">
+        <div
+          class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded-md"
+        >
+          <img class="w-6 mr-2 rounded-full" src="Images/Flags/flag-Syria.png" alt="" />
+          <div></div>
+          Syria (+963)
+        </div>
+      </li>
+      <li class="cursor-pointer" (click)="selectCountry('Egypt')">
+        <div
+          class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded-md"
+        >
+          <img class="w-6 mr-2 rounded-full" src="Images/Flags/flag-egypt.png" alt="" />
+          <div>Egypt (+20)</div>
+        </div>
+      </li>
+      <li class="cursor-pointer" (click)="selectCountry('Saudi')">
+        <div
+          class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded-md"
+        >
+          <img class="w-6 mr-2 rounded-full" src="Images/Flags/flag-Saudi.png" alt="" />
+          <div>Saudi (+966)</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <label for="phone-input" class="mb-2.5 text-sm font-medium text-heading sr-only"
+    >Phone number:</label
+  >
+  <div class="relative w-full">
+    <input
+      type="phone"
+      [id]="inputId()"
+      class="w-full z-20 text-heading text-sm  focus:outline-none focus:ring-1 focus:ring-brand focus:border-brand block px-3 py-2.5 placeholder:text-body"
+      [placeholder]="selectedCountry.placeHolder || ''"
+      [formControl]="formControl"
+    />
+  </div>
+</div>

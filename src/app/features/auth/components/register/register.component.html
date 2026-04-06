@@ -1,0 +1,35 @@
+<section class="w-full h-full flex justify-center items-center">
+  <div class="w-112.5">
+    @if (step() == 'email') {
+      <app-email
+        [control]="registerForm.get('email')!"
+        (sendEmail)="sendEmail()"
+        [isLooding]="isLooding()"
+      ></app-email>
+    }
+    @if (step() == 'code') {
+      <app-verify-email
+        [isLooding]="isLooding()"
+        [(step)]="step"
+        [emailControl]="registerForm.get('email')!"
+        [codeControl]="registerForm.get('code')!"
+        (sendCode)="sendCode()"
+        (resendCode)="sendEmail()"
+      ></app-verify-email>
+    }
+    @if (step() == 'info') {
+      <app-user-info
+        [isLooding]="isLooding()"
+        [parentForm]="registerForm"
+        (gotopassword)="nextToPassword()"
+      ></app-user-info>
+    }
+    @if (step() == 'password') {
+      <app-password
+        [parentForm]="registerForm"
+        (createAccount)="createAccount()"
+        [isLooding]="isLooding()"
+      ></app-password>
+    }
+  </div>
+</section>

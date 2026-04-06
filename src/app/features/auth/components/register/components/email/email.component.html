@@ -1,0 +1,39 @@
+<section class="">
+  <h1 class="text-3xl font-bold text-gray-800 Finter mb-4">Create Account</h1>
+  <form (submit)="$event.preventDefault(); handleClick()" class="">
+    <div class="mb-10">
+      <app-input-field
+        inputId="email"
+        inputType="email"
+        inputLabel="Email"
+        inputPlaceholder="user@example.com"
+        [control]="control()!"
+      ></app-input-field>
+      <div class="text-sm text-red-600">
+        @if (control()?.errors && control()?.touched) {
+          @if (control()?.hasError('required')) {
+            <p class="">Your email is required.</p>
+          }
+          @if (control()?.hasError('email')) {
+            <p class="">Enter a valid email.</p>
+          }
+        }
+      </div>
+    </div>
+    <div class="mb-9">
+      <app-d-button
+        [isLooding]="isLooding()"
+        [isDisabled]="formControl.invalid"
+        btnBgColor="bg-blue-50"
+        btnBorderColor="border-blue-600"
+        btnText="Next"
+        btnColor="text-gray-800"
+        icon="fa-solid fa-angle-right"
+        iconLocation="right"
+      ></app-d-button>
+    </div>
+    <div class="text-center">
+      <app-d-form-msg msg="Already have an account? " link="Login" goTo="/login"></app-d-form-msg>
+    </div>
+  </form>
+</section>

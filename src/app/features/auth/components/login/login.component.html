@@ -1,0 +1,57 @@
+<section class="h-full">
+  <div class="max-w-113 mx-auto flex flex-col justify-center h-full">
+    <h1 class="text-3xl font-bold Finter mb-10">Login</h1>
+    <form [formGroup]="loginForm" (ngSubmit)="login()" class="FgMono">
+      <div class="mb-4">
+        <app-input-field
+          inputId="user-name"
+          inputLabel="Username"
+          inputPlaceholder="user123"
+          [control]="loginForm.get('username')!"
+        ></app-input-field>
+        <div>
+          @let usernameControl = loginForm.get('username');
+          @if (usernameControl?.errors && usernameControl?.touched) {
+            <p class="text-sm text-red-600">Your username is required</p>
+          }
+        </div>
+      </div>
+      <div class="">
+        <app-input-field
+          inputId="user-password"
+          inputLabel="Password"
+          inputPlaceholder="********"
+          inputType="password"
+          [control]="loginForm.get('password')!"
+        ></app-input-field>
+        <div>
+          @let passwordControl = loginForm.get('password');
+          @if (passwordControl?.errors && passwordControl?.touched) {
+            <p class="text-sm text-red-600">Your password is required</p>
+          }
+        </div>
+        <div class="text-end mt-2.5">
+          <a routerLink="/forgot-password" class="text-sm font-medium text-blue-600"
+            >Forget your password?</a
+          >
+        </div>
+      </div>
+      <div class="mt-10">
+        <div class="mb-9">
+          <app-d-button
+            [isLooding]="isLooding()"
+            [isDisabled]="loginForm.invalid"
+            btnText="Login"
+          ></app-d-button>
+        </div>
+        <div class="text-center">
+          <app-d-form-msg
+            msg="Don’t have an account?"
+            link="Create yours"
+            goTo="/register"
+          ></app-d-form-msg>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>

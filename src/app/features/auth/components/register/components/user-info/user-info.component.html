@@ -1,0 +1,72 @@
+<section>
+  <div class="flex justify-between items-center gap-1.5 mb-2.5">
+    <div class="w-2.5 h-2.5 bg-blue-600 rotate-45 shrink-0"></div>
+    <div class="border border-blue-600 w-full"></div>
+    <div class="w-2.5 h-2.5 bg-blue-600 rotate-45 shrink-0"></div>
+    <div class="border border-blue-600 w-full"></div>
+    <div class="w-5.25 h-5.25 bg-blue-100 rotate-45 flex items-center justify-center shrink-0">
+      <div class="w-2.5 h-2.5 bg-blue-600"></div>
+    </div>
+    <div class="border border-dashed border-blue-600 w-full"></div>
+    <div class="w-2.5 h-2.5 bg-blue-100 border border-blue-600 rotate-45 shrink-0"></div>
+  </div>
+  <h1 class="text-3xl font-bold text-gray-800 Finter mb-4">Create Account</h1>
+  <h2 class="text-2xl font-bold text-blue-600 mb-2.5 Finter">Tell us more about you</h2>
+  <form class="FgMono space-y-4">
+    <div class="flex gap-2.5">
+      <div>
+        <app-input-field
+          [redStar]="true"
+          inputId="fName"
+          inputLabel="First Name"
+          inputPlaceholder="Muhammad"
+          [control]="parentForm().get('firstName')!"
+        ></app-input-field>
+      </div>
+      <div>
+        <app-input-field
+          [redStar]="true"
+          inputId="lName"
+          inputLabel="Last Name"
+          inputPlaceholder="Elsharkawy"
+          [control]="parentForm().get('lastName')!"
+        ></app-input-field>
+      </div>
+    </div>
+    <div>
+      <app-input-field
+        [redStar]="true"
+        inputId="username"
+        inputLabel="Username"
+        inputPlaceholder="user123"
+        [control]="parentForm().get('username')!"
+      ></app-input-field>
+    </div>
+    <div>
+      <label class="block font-medium font-gMono" for="phone">Phone</label>
+      <app-phone-input inputId="phone" [control]="parentForm().get('phone')!"></app-phone-input>
+      <!-- <input
+        id="phone"
+        type="tel"
+        class="w-full border p-2.5 placeholder:text-gray-400 placeholder:text-sm"
+        [class.border-gray-200]="!isInValid"
+        [class.border-red-600]="isInValid"
+        [formControl]="phoneControl"
+      /> -->
+    </div>
+    <div class="mt-8">
+      <app-d-button
+        [isDisabled]="isDisabled()"
+        [isLooding]="isLooding()"
+        (click)="$event.preventDefault(); handleClick()"
+        btnBgColor="bg-blue-50"
+        btnBgColor="bg-blue-50"
+        btnBorderColor="border-blue-600"
+        btnText="Next"
+        btnColor="text-gray-800"
+        icon="fa-solid fa-angle-right"
+        iconLocation="right"
+      ></app-d-button>
+    </div>
+  </form>
+</section>

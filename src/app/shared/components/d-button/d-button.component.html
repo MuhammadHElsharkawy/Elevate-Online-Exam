@@ -1,0 +1,49 @@
+@if (iconLocation() != 'top' && iconLocation() != 'bottom') {
+  <button
+    [disabled]="isDisabled() || isLooding()"
+    [class]="
+      'w-full cursor-pointer p-2.5 text-sm font-medium flex gap-2.5 justify-center disabled:cursor-no-drop disabled:opacity-40   ' +
+        btnBgColor() +
+        ' ' +
+        btnColor() +
+        ' ' +
+        btnBorderColor() || ''
+    "
+    [class.border]="btnBorderColor()"
+    [class.flex-row]="iconLocation() == 'right'"
+    [class.flex-row-reverse]="iconLocation() == 'left'"
+  >
+    <span>
+      {{ btnText() }}
+    </span>
+    @if (icon()) {
+      <span>
+        <i [class]="icon()"></i>
+      </span>
+    }
+  </button>
+}
+
+@if (iconLocation() == 'top' || iconLocation() == 'bottom') {
+  <button
+    [disabled]="isDisabled() || isLooding()"
+    [class]="
+      'w-full cursor-pointer p-2.5 text-sm font-medium relative   ' +
+        btnBgColor() +
+        ' ' +
+        btnColor() +
+        ' ' +
+        btnBorderColor() || ''
+    "
+    [class.border]="btnBorderColor()"
+  >
+    <span>
+      {{ btnText() }}
+    </span>
+    @if (icon()) {
+      <span class="absolute -top-1/2 translate-y-1/2 left-1/2 -translate-x-1/2">
+        <i [class]="icon() + ' text-lg'"></i>
+      </span>
+    }
+  </button>
+}
