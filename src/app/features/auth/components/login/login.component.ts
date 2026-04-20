@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
           if (typeof res != 'string' && res.token) {
             localStorage.setItem('ExamAppToken', res.token);
           }
-          this._router.navigate(['/diplomas']);
+          this._router.navigate(['/main/diplomas']);
         },
         error: (err) => {
           console.log(err);

@@ -124,7 +124,6 @@ export class QuestionsComponent implements OnDestroy {
       },
       error: (err) => {
         console.log(err);
-
       }
     })
   }

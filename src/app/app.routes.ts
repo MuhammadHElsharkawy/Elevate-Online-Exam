@@ -25,8 +25,7 @@ export const routes: Routes = [
             { path: '', redirectTo: 'diplomas', pathMatch: 'full' },
             { path: 'diplomas', component: DiplomasComponent },
             { path: 'exams', component: ExamsComponent },
-            { path: 'questions', component: QuestionsComponent },
-            { path: 'results', component: ResultsComponent }
+            { path: 'questions', component: QuestionsComponent }
         ]
     }
 ];
