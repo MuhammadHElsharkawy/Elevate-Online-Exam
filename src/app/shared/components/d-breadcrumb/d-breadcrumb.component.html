@@ -1,0 +1,8 @@
+<section class="bg-white w-full text-sm text-gray-400 FgMono p-4">
+  @for (item of bath(); track $index) {
+    <span [class.text-blue-600]="bath().indexOf(item) == (bath().length - 1)">{{item}} </span>
+    @if (bath().indexOf(item) < (bath().length - 1)) {
+        <span class="">/ </span>
+    }
+  }
+</section>

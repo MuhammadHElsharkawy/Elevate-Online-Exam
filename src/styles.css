@@ -3,7 +3,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 @import 'tailwindcss';
 
-@import "flowbite/src/themes/default";
+@import 'flowbite/src/themes/default';
 
 @plugin "flowbite/plugin";
 
@@ -12,6 +12,46 @@
 .FgMono {
   font-family: 'Geist Mono', monospace;
 }
-.Finter {
-  font-family: 'Inter', sans-serif;
+
+input[type='radio'] {
+  appearance: none;
+  -webkit-appearance: none;
+  opacity: 0;
+}
+
+label.custom {
+  cursor: pointer;
+  position: relative;
+  &::before {
+    content: '';
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    position: absolute;
+    background-color: transparent;
+    border: 1.6px solid #9ca3af;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  &::after {
+    content: '';
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    position: absolute;
+    background-color: #155dfc;
+    left: 20px;
+    top: 50%;
+    transform: scale(0) translateY(-50%);
+    transition: 0.1s ease-in-out;
+  }
+  &:has(input[type='radio']:checked) {
+    &::after {
+      transform: scale(1) translateY(-50%);
+    }
+    &::before {
+      border-color: #155dfc;
+    }
+  }
 }

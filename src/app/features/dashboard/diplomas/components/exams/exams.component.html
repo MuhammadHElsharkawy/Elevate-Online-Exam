@@ -1,0 +1,95 @@
+<main class="bg-gray-50">
+  <app-d-breadcrumb [bath]="['Diplomas', 'Frontend Development', 'Exams']"></app-d-breadcrumb>
+  <section class="p-6 flex flex-col gap-6">
+    <app-d-page-heading
+      [svgContent]="bookIcon"
+      [title]="currentDiploma()?.title"
+      [withBack]="true"
+    ></app-d-page-heading>
+    <div class="bg-white p-6 flex flex-col gap-6 FgMono">
+      @for (exam of ExamsList(); track exam.id) {
+        <a
+          routerLink="/main/questions"
+          [queryParams]="{ examId: exam.id }"
+          class="relative p-4 flex gap-4 bg-blue-50 hover:border-dashed hover:border hover:border-blue-200 transition-all group"
+        >
+          <div
+            class="absolute bottom-2.5 right-2.5 bg-blue-600 text-white flex items-center gap-2.5 px-2.5 py-1.5 text-sm FgMono opacity-0 group-hover:opacity-100 transition"
+          >
+            START
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-move-right-icon lucide-move-right"
+            >
+              <path d="M18 8L22 12L18 16" />
+              <path d="M2 12H22" />
+            </svg>
+          </div>
+          <div
+            class="w-25 h-25 bg-blue-100 border border-blue-300 flex items-center justify-center shrink-0"
+          >
+            <img class="w-3/4" [src]="exam.image" [alt]="exam.title" />
+          </div>
+          <div class="space-y-1.5 grow">
+            <div class="flex items-center justify-between">
+              <h3 class="text-xl font-semibold text-blue-600">{{ exam.title }}</h3>
+              <div class="flex items-center gap-1.5 text-sm">
+                <div class="flex items-center gap-1.5">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-circle-question-mark-icon lucide-circle-question-mark"
+                  >
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+                    <path d="M12 17h.01" />
+                  </svg>
+                  <span>{{ exam.questionsCount }} Questions</span>
+                </div>
+                <div class="h-4.5 border border-gray-300"></div>
+                <div class="flex items-center gap-1.5">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-timer-icon lucide-timer"
+                  >
+                    <line x1="10" x2="14" y1="2" y2="2" />
+                    <line x1="12" x2="15" y1="14" y2="11" />
+                    <circle cx="12" cy="14" r="8" />
+                  </svg>
+                  <span>{{ exam.duration }} minutes</span>
+                </div>
+              </div>
+            </div>
+            <p class="text-sm text-gray-500">
+              {{ exam.description }}
+            </p>
+          </div>
+        </a>
+      }
+      <p class="text-center p-2.5 text-gray-600">End of list</p>
+    </div>
+  </section>
+</main>

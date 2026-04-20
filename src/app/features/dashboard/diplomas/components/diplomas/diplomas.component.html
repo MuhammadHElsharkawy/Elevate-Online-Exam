@@ -1,0 +1,40 @@
+<main class="bg-gray-50">
+  <app-d-breadcrumb [bath]="['Diplomas']"></app-d-breadcrumb>
+  <section class="p-6 flex flex-col gap-6">
+    <app-d-page-heading [svgContent]="graduationIcon" title="Diplomas"></app-d-page-heading>
+    <div class="grid grid-cols-3 grid-rows-2 gap-2.5 grow overflow-hidden min-h-0">
+      @for (item of allDiplomas().slice(0, limit()); track item.id) {
+        <a routerLink="/main/exams" [queryParams]="{ diplomaId: item.id }" class="relative min-h-0">
+          <img class="w-full h-full object-cover" [src]="item.image" [alt]="item.title" />
+          <div
+            class="absolute left-2.5 right-2.5 bottom-2.5 bg-[#155DFCBF] backdrop-blur-md p-4 text-white FgMono"
+          >
+            <h3 class="text-xl font-semibold mb-1">{{ item.title }}</h3>
+            <p class="text-sm">{{ item.description }}</p>
+          </div>
+        </a>
+      }
+    </div>
+    <button
+      (click)="limit.set(allDiplomas().length)"
+      [class.hidden]="limit() >= allDiplomas().length"
+      class="cursor-pointer p-2.5 flex flex-col gap-1 items-center FgMono text-gray-500"
+    >
+      <span>Scroll to view more</span>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.75"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="lucide lucide-chevron-down-icon lucide-chevron-down"
+      >
+        <path d="m6 9 6 6 6-6" />
+      </svg>
+    </button>
+  </section>
+</main>

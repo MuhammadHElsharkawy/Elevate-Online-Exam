@@ -1,0 +1,19 @@
+.donut {
+  border-radius: 50%;
+
+  background: conic-gradient(
+    from 90deg,
+    var(--mainColor) 0deg calc(var(--correct) * 3.6deg),
+    var(--secondColor) calc(var(--correct) * 3.6deg) 360deg
+  );
+
+  position: relative;
+}
+
+.donut::before {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  background: white;
+  border-radius: 50%;
+}

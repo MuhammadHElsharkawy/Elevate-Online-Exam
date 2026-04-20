@@ -1,0 +1,14 @@
+<div
+  class="donut relative transition-all"
+  [style.width.px]="size()"
+  [style.height.px]="size()"
+  [style.--correct]="Percent"
+  [style.--mainColor]="mainColor()"
+  [style.--secondColor]="secondColor()"
+>
+@if (withTimer()) {
+  <p class="text-xs FgMono absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2">
+    {{ minutes() }}:{{ seconds() < 10 ? '0' + seconds() : seconds() }}
+  </p>
+}
+</div>

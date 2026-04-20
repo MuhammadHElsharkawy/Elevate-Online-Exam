@@ -1,0 +1,101 @@
+<main class="bg-gray-50 min-h-screen">
+  <app-d-breadcrumb [bath]="['Diplomas', 'Frontend Development', 'CSS Exam']"></app-d-breadcrumb>
+  <section class="flex flex-col gap-6 p-6">
+    <app-d-page-heading
+      [svgContent]="questionmarkIcon"
+      title="CSS Exam Questions"
+      [withBack]="true"
+    ></app-d-page-heading>
+    <div class="bg-white p-6 flex flex-col gap-4">
+      <div class="flex gap-6">
+        <div class="flex flex-col justify-center gap-1.5 grow">
+          <div class="flex justify-between items-center">
+            <p class="">Frontend Development - CSS Quiz</p>
+            <p class="">
+              Question <span class="text-blue-600">{{ currentQuestionIndex() + 1 }}</span> of
+              {{ examQuestions().length }}
+            </p>
+          </div>
+          <div class="bg-blue-50 h-4 w-full">
+            <div
+              class="h-full bg-blue-600 transition-all ease-in-out"
+              [style.width.%]="progressWidth()"
+            ></div>
+          </div>
+        </div>
+        @if (!showResults()) {
+          <div class="w-0 h-16.25 border border-gray-200"></div>
+          <app-donut-chart
+            [totalTime]="currentExam()?.duration! * 60"
+            (timeFinished)="submitExam()"
+            [closeTimer]="showResults()"
+            [totalTime]="30"
+            [mainCount]="4"
+            [totalCount]="10"
+            [size]="65"
+            [withTimer]="true"
+          ></app-donut-chart>
+        }
+      </div>
+      <!--  -->
+      @if (!showResults()) {
+        <p class="pt-6 text-2xl font-semibold text-blue-600">
+          {{ examQuestions()[currentQuestionIndex()]?.question }}
+        </p>
+        <div class="flex flex-col gap-2.5">
+          @for (ch of examQuestions()[currentQuestionIndex()]?.answers; track ch.id) {
+            <label [for]="ch.id" class="custom p-4 flex items-center gap-2.5 bg-gray-50 text-sm">
+              <input
+                type="radio"
+                [name]="'Question-' + examQuestions()[currentQuestionIndex()]?.id"
+                [id]="ch.id"
+                [value]="ch.id"
+                [checked]="userAnswers()[currentQuestion().id] === ch.id"
+                (change)="
+                  handleAnswerSelection(examQuestions()[currentQuestionIndex()]?.id!, ch.id)
+                "
+              />
+              {{ ch.text }}
+            </label>
+          }
+        </div>
+        <div class="pt-6 grid grid-cols-2 gap-4">
+          <app-d-button
+            [isDisabled]="currentQuestionIndex() == 0"
+            (btnClick)="prevQuestion()"
+            btnBgColor="bg-gray-200"
+            icon="fa-solid fa-angle-left"
+            iconLocation="left"
+            btnColor="text-gray-400"
+            btnText="Previous"
+          ></app-d-button>
+          @if (currentQuestionIndex() == examQuestions().length - 1) {
+            <app-d-button
+              [isDisabled]="
+                currentQuestionIndex() != examQuestions().length - 1 || !isAllQuestionsAnswered()
+              "
+              [isLooding]="submitLoading()"
+              btnBgColor="bg-blue-600"
+              btnText="Finish"
+              (btnClick)="submitExam()"
+            ></app-d-button>
+          } @else {
+            <app-d-button
+              [isDisabled]="currentQuestionIndex() == examQuestions().length - 1"
+              (btnClick)="nextQuestion()"
+              btnBgColor="bg-blue-600"
+              icon="fa-solid fa-angle-right"
+              iconLocation="right"
+              btnText="Next"
+              btnType="submit"
+            ></app-d-button>
+          }
+        </div>
+      }
+      @if (showResults()) {
+        <app-results [resultsRes]="results()!" [currentExam]="currentExam()"></app-results>
+      }
+      <!--  -->
+    </div>
+  </section>
+</main>

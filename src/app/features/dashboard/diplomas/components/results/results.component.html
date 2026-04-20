@@ -1,0 +1,64 @@
+<section class="space-y-4">
+  <h2 class="pt-6 text-2xl font-semibold text-blue-600">Results:</h2>
+  @if (resultsRes()) {
+    <div class="flex gap-4 h-128.5">
+      <div class="w-68.75 bg-blue-50 border border-blue-200 p-9 flex flex-col gap-6 items-center">
+        <app-donut-chart
+          [mainCount]="resultsRes()!.correctAnswers"
+          [totalCount]="resultsRes()!.totalQuestions"
+        ></app-donut-chart>
+        <div class="p-2.5 space-y-2.5">
+          <div class="flex items-center gap-2.5">
+            <div class="w-4 h-4 bg-emerald-500"></div>
+            <p class="">Correct: {{ resultsRes()!.correctAnswers }}</p>
+          </div>
+          <div class="flex items-center gap-2.5">
+            <div class="w-4 h-4 bg-red-500"></div>
+            <p class="">Incorrect: {{ resultsRes()!.wrongAnswers }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="border-dashed border border-blue-200 p-1.5 grow overflow-auto">
+        @for (item of resultsRes()?.analytics; track item.questionId) {
+          <div class="p-2.5 space-y-2.5">
+            <h3 class="text-blue-600 text-xl font-semibold">{{ item.questionText }}</h3>
+            @if (!item.isCorrect) {
+              <label class="custom wrong p-4 flex items-center gap-2.5 text-sm">
+                <input checked disabled type="radio" />
+                {{ item.selectedAnswer.text }}
+              </label>
+            }
+            <label class="custom correct p-4 flex items-center gap-2.5 text-sm">
+              <input [checked]="item.isCorrect" disabled type="radio" />
+              {{ item.correctAnswer.text }}
+            </label>
+          </div>
+        }
+      </div>
+    </div>
+    <div class="pt-6 grid grid-cols-2 gap-4">
+      <app-d-button
+        (btnClick)="tryAgain()"
+        btnText="Restart"
+        [svgContent]="restarticon"
+        iconLocation="left"
+        btnBgColor="bg-gray-200"
+        btnColor="text-gray-800"
+      ></app-d-button>
+      <app-d-button
+        btnText="Explore"
+        [svgContent]="foldersearchicon"
+        iconLocation="left"
+        btnBgColor="bg-blue-600"
+        btnColor="text-white"
+      ></app-d-button>
+    </div>
+  } @else {
+    <div class="">
+      <p class="">Time out.</p>
+      <button (click)="tryAgain()" class="bg-blue-500 text-white FgMono p-2.5 cursor-pointer">
+        Try again.
+      </button>
+    </div>
+  }
+</section>

@@ -1,0 +1,32 @@
+label.custom.correct {
+  background-color: #ECFDF5;
+  cursor: pointer;
+  position: relative;
+  &::after {
+    background-color: #009966;
+  }
+  &:has(input[type='radio']:checked) {
+    &::after {
+      transform: scale(1) translateY(-50%);
+    }
+    &::before {
+      border-color: #009966;
+    }
+  }
+}
+label.custom.wrong {
+  background-color: #fef2f2;
+  cursor: pointer;
+  position: relative;
+  &::after {
+    background-color: #dc2626;
+  }
+  &:has(input[type='radio']:checked) {
+    &::after {
+      transform: scale(1) translateY(-50%);
+    }
+    &::before {
+      border-color: #dc2626;
+    }
+  }
+}

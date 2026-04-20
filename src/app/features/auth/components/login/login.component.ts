@@ -34,11 +34,13 @@ export class LoginComponent implements OnInit {
   login(): void {
     if (this.loginForm.valid) {
       this.isLooding.set(true);
-      console.log(this.loginForm.value);
       this._authService.Login(this.loginForm.value).subscribe({
         next: (res) => {
-          console.log(res);
           this.isLooding.set(false);
+          if (typeof res != 'string' && res.token) {
+            localStorage.setItem('ExamAppToken', res.token);
+          }
+          this._router.navigate(['/diplomas']);
         },
         error: (err) => {
           console.log(err);
