@@ -6,7 +6,6 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { IExams } from '../../modules/exams/exams.interface';
 import { DiplomasService } from '../../services/diplomas/diplomas.service';
 import { IDiploma } from '../../modules/diplomas/diplomas.interface';
-import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-exams',

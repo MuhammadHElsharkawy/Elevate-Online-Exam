@@ -26,4 +26,5 @@ export class DPageHeadingComponent {
   goBack(): void {
     this._location.back();
   }
+
 }

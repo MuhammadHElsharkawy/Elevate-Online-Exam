@@ -1,0 +1,214 @@
+<main class="w-full FgMono">
+  @if (UserData()) {
+    <form [formGroup]="userForm" (ngSubmit)="updateProfile()" class="space-y-4">
+      <div class="flex justify-baseline gap-2.5 w-full">
+        <div class="w-full">
+          <app-input-field
+            [control]="userForm.get('firstName')!"
+            inputId="fname"
+            inputLabel="First Name"
+          ></app-input-field>
+        </div>
+        <div class="w-full">
+          <app-input-field
+            [control]="userForm.get('lastName')!"
+            inputId="lname"
+            inputLabel="Last Name"
+          ></app-input-field>
+        </div>
+      </div>
+      <div class="">
+        <app-input-field
+          [control]="userForm.get('username')!"
+          inputId="username"
+          inputLabel="Username"
+        ></app-input-field>
+      </div>
+      <div class="relative">
+        <app-input-field
+          [control]="userForm.get('email')!"
+          inputId="email"
+          inputLabel="Email"
+          inputType="email"
+          [isReadOnly]="true"
+        ></app-input-field>
+        <button
+          type="button"
+          (click)="changeBtnClick()"
+          class="absolute text-sm font-medium text-blue-600 flex gap-1.5 items-center top-0 right-0 cursor-pointer"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-pencil-line-icon lucide-pencil-line"
+          >
+            <path d="M13 21h8" />
+            <path d="m15 5 4 4" />
+            <path
+              d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"
+            />
+          </svg>
+          <span>Change</span>
+        </button>
+      </div>
+      <div class="">
+        <app-phone-input [control]="userForm.get('phone')!" inputId="phone"></app-phone-input>
+      </div>
+      <div class="grid grid-cols-2 gap-3.5 pt-4">
+        <app-d-button
+          (btnClick)="deleteBtnClick()"
+          btnBgColor="bg-red-50"
+          btnColor="text-red-600"
+          btnText="Delete My Account"
+        ></app-d-button>
+        <app-d-button btnText="Save Changes" btnType="submit"></app-d-button>
+      </div>
+    </form>
+  }
+</main>
+
+<section
+  class="bg-[#00000080] backdrop-blur-xs absolute inset-0 z-50 flex justify-center items-center"
+  [class.hidden]="!isModalOpen()"
+>
+  <div class="w-144.75 bg-white relative">
+    <button class="absolute top-3.5 right-3.5 cursor-pointer" (click)="closeModal()">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="lucide lucide-x-icon lucide-x"
+      >
+        <path d="M18 6 6 18" />
+        <path d="m6 6 12 12" />
+      </svg>
+    </button>
+    @if (modalMode() == 'delete') {
+      <div class="p-8 h-77 flex flex-col items-center justify-center gap-7.5 FgMono">
+        <div class="w-27.5 h-27.5 rounded-full bg-red-50 flex items-center justify-center">
+          <div class="w-20 h-20 rounded-full bg-red-100 flex items-center justify-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="52"
+              height="52"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.25"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-triangle-alert-icon lucide-triangle-alert text-red-600"
+            >
+              <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3" />
+              <path d="M12 9v4" />
+              <path d="M12 17h.01" />
+            </svg>
+          </div>
+        </div>
+        <div class="space-y-2.5 text-center">
+          <h3 class="text-red-600 text-lg font-medium">
+            Are you sure you want to delete your account?
+          </h3>
+          <p class="text-gray-500 text-sm">This action is permanent and cannot be undone.</p>
+        </div>
+      </div>
+      <div class="bg-gray-50 border-t border-gray-200 py-6 px-14.25 grid grid-cols-2 gap-2.5">
+        <div>
+          <app-d-button
+            btnBgColor="bg-gray-200"
+            btnColor="text-gray-800"
+            btnText="Cancel"
+            (btnClick)="closeModal()"
+          ></app-d-button>
+        </div>
+        <div>
+          <app-d-button
+            btnBgColor="bg-red-600"
+            btnColor="text-white"
+            btnText="Yes, delete"
+            (btnClick)="deleteAccount()"
+          ></app-d-button>
+        </div>
+      </div>
+    }
+    @if (modalMode() == 'email') {
+      <form [formGroup]="changeEmailForm" (ngSubmit)="requestCode()">
+        <div class="p-9">
+          <div class="w-full flex items-center mb-2.5">
+            <div class="w-5.25 h-5.25 bg-blue-100 rotate-45 flex items-center justify-center">
+              <div class="w-2.5 h-2.5 bg-blue-600"></div>
+            </div>
+            <div class="grow border border-blue-600 border-dashed"></div>
+            <div class="w-2.5 h-2.5 bg-blue-100 border border-blue-600 rotate-45"></div>
+          </div>
+          <h1 class="mb-7.5 text-3xl font-bold Finter">Change Email</h1>
+          <div class="mb-7.5">
+            <h2 class="text-2xl text-blue-600 font-bold space-y-2.5 Finter">
+              Enter your new email
+            </h2>
+          </div>
+          <div class="">
+            <app-input-field
+              [control]="changeEmailForm.get('newEmail')!"
+              inputId="emailform"
+              inputType="email"
+              inputPlaceholder="user@example.com"
+              inputLabel="Email"
+            ></app-input-field>
+          </div>
+        </div>
+        <div class="p-6 bg-gray-50 border-t border-gray-200">
+          <app-d-button
+            btnType="submit"
+            [isLooding]="changeEmailLoading()"
+            btnText="Next"
+            icon="fa-solid fa-angle-right"
+            iconLocation="right"
+            [isDisabled]="changeEmailForm.get('newEmail')?.invalid!"
+          ></app-d-button>
+        </div>
+      </form>
+    }
+    @if (modalMode() == 'code') {
+      <form [formGroup]="changeEmailForm" (ngSubmit)="confirmEmail()">
+        <div class="p-9">
+          <div class="w-full flex items-center mb-2.5">
+            <div class="w-5.25 h-5.25 bg-blue-100 rotate-45 flex items-center justify-center">
+              <div class="w-2.5 h-2.5 bg-blue-600"></div>
+            </div>
+            <div class="grow border border-blue-600 border-dashed"></div>
+            <div class="w-2.5 h-2.5 bg-blue-100 border border-blue-600 rotate-45"></div>
+          </div>
+          <h1 class="mb-7.5 text-3xl font-bold Finter">Change Email</h1>
+          <div class="mb-7.5">
+            <h2 class="text-2xl text-blue-600 font-bold space-y-2.5 Finter">Verify OTP</h2>
+            <p class="FgMono text-gray-500">
+              Please enter the 6-digits code we have sent to:<br />
+              <span class="text-gray-800 font-medium">user@example.com.</span>
+              <a href="" class="text-blue-600 font-medium underline">Edit</a>
+            </p>
+          </div>
+          <div class="">
+            <app-virify-email [codeControl]="changeEmailForm.get('code')!" (resendCode)="requestCode()"></app-virify-email>
+          </div>
+        </div>
+        <div class="p-6 bg-gray-50 border-t border-gray-200">
+          <app-d-button btnText="Verify Code" btnType="submit"></app-d-button>
+        </div>
+      </form>
+    }
+  </div>
+</section>

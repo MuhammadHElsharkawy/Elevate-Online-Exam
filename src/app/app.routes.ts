@@ -8,7 +8,11 @@ import { MainLayoutComponent } from './features/dashboard/main-layout/main-layou
 import { DiplomasComponent } from './features/dashboard/diplomas/components/diplomas/diplomas.component';
 import { ExamsComponent } from './features/dashboard/diplomas/components/exams/exams.component';
 import { QuestionsComponent } from './features/dashboard/diplomas/components/questions/questions.component';
-import { ResultsComponent } from './features/dashboard/diplomas/components/results/results.component';
+import { authGuard } from './core/guards/auth/auth-guard-guard';
+import { AccountSettingsComponent } from './features/dashboard/account-settings/components/account-settings/account-settings.component';
+import { DiplomasSectionComponent } from './features/dashboard/diplomas/components/diplomas-section/diplomas-section.component';
+import { ProfileComponent } from './features/dashboard/account-settings/components/profile/profile.component';
+import { ChangePasswordComponent } from './features/dashboard/account-settings/components/change-password/change-password.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -21,11 +25,22 @@ export const routes: Routes = [
     },
     { path: 'reset-password', component: ResetPasswordComponent },
     {
-        path: 'main', component: MainLayoutComponent, children: [
-            { path: '', redirectTo: 'diplomas', pathMatch: 'full' },
-            { path: 'diplomas', component: DiplomasComponent },
-            { path: 'exams', component: ExamsComponent },
-            { path: 'questions', component: QuestionsComponent }
+        path: 'main', component: MainLayoutComponent, canActivate: [authGuard], children: [
+            {
+                path: 'diplomas-section', component: DiplomasSectionComponent, children: [
+                    { path: '', redirectTo: 'diplomas', pathMatch: 'full' },
+                    { path: 'diplomas', component: DiplomasComponent },
+                    { path: 'exams', component: ExamsComponent },
+                    { path: 'questions', component: QuestionsComponent },
+                ]
+            },
+            {
+                path: 'account-settings', component: AccountSettingsComponent, children: [
+                    { path: '', redirectTo: 'profile', pathMatch: 'full' },
+                    { path: 'profile', component: ProfileComponent },
+                    { path: 'change-password', component: ChangePasswordComponent }
+                ]
+            }
         ]
     }
 ];

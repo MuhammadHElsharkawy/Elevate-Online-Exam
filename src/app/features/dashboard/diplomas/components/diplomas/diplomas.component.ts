@@ -32,9 +32,7 @@ export class DiplomasComponent implements OnDestroy {
   getAllDiplomas(): void {
     this._diplomasService.getAllDiplomas().subscribe({
         next: (res) => {
-          this.allDiplomas.set(res)
-          console.log(this.allDiplomas());
-          
+          this.allDiplomas.set(res);
         },
         error: (err) => {
           console.log(err);

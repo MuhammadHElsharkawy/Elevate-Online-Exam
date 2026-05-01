@@ -1,21 +1,23 @@
 <main>
-  <div class="grid grid-cols-12 min-h-screen">
-    <div class="col-span-3 bg-blue-50 flex flex-col h-screen sticky top-0">
-      <div class="mt-10 ms-10 mb-15">
-        <div class="mb-2.5">
+  <div class="grid lg:grid-cols-[360px_1fr]  grid-cols-[100px_1fr] min-h-screen">
+    <div class="bg-blue-50 flex flex-col h-screen sticky top-0 p-4 lg:p-10">
+      <div class="mb-15">
+        <div class="mb-2.5 hidden lg:block">
           <img class="w-48" src="Images/elevate-logo.png" alt="" />
         </div>
-        <div class="flex items-center gap-2.5 text-blue-600 text-xl font-semibold FgMono">
+        <div
+          class="flex items-center lg:justify-start justify-center gap-2.5 text-blue-600 text-xl font-semibold FgMono"
+        >
           <img src="Images/folder-code.svg" alt="" />
-          <span>Exam App</span>
+          <span class="hidden lg:block">Exam App</span>
         </div>
       </div>
-      <nav class="mx-10 mb-10 grow flex flex-col justify-between">
-        <div class="flex flex-col gap-2.5">
+      <nav class="grow flex flex-col justify-between items-center lg:items-start">
+        <div class="flex flex-col gap-2.5 w-full">
           <a
             routerLinkActive="border border-blue-500 bg-blue-100 text-blue-600!"
-            routerLink="/main"
-            class="flex items-center gap-2.5 py-4 ps-4 text-gray-500"
+            routerLink="/main/diplomas-section"
+            class="flex items-center lg:justify-start justify-center gap-2.5 p-4 text-gray-500 w-full"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -35,12 +37,12 @@
               <path d="M22 10v6" />
               <path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5" />
             </svg>
-            <span>Diplomas</span>
+            <span class="hidden lg:block">Diplomas</span>
           </a>
           <a
             routerLinkActive="border border-blue-500 bg-blue-100 text-blue-600!"
-            routerLink="/test"
-            class="flex items-center gap-2.5 py-4 ps-4 text-gray-500"
+            routerLink="/main/account-settings"
+            class="flex items-center lg:justify-start justify-center gap-2.5 p-4 text-gray-500"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -57,45 +59,36 @@
               <circle cx="12" cy="8" r="5" />
               <path d="M20 21a8 8 0 0 0-16 0" />
             </svg>
-            <span>Account Settings</span>
+            <span class="hidden lg:block">Account Settings</span>
           </a>
         </div>
-        <div class="flex items-center justify-between gap-1.25 relative">
-          <div class="flex items-center gap-2.5">
-            <div class="w-14 h-14">
-              <img class="w-full h-full object-cover" src="Images/def.jpg" alt="" />
+        @if (UserData()) {
+          <div class="flex items-center justify-between gap-1.25 relative">
+            <div class="flex items-center gap-2.5">
+              <div
+                class="w-14 h-14 flex justify-center items-center"
+                [class.bg-white]="!UserData()?.profilePhoto"
+                [class.rounded-full]="!UserData()?.profilePhoto"
+              >
+                @if (UserData()?.profilePhoto) {
+                  <img
+                    class="w-full h-full object-cover"
+                    [src]="UserData()?.profilePhoto"
+                    [alt]="UserData()?.firstName"
+                  />
+                } @else {
+                  <span class="text-3xl font-bold">{{ UserData()?.firstName?.slice(0, 1) }}</span>
+                }
+              </div>
+              <div class="FgMono hidden lg:block">
+                <p class="text-blue-600 font-medium">{{ UserData()?.firstName }}</p>
+                <p class="text-gray-500 text-sm">{{ UserData()?.email }}</p>
+              </div>
             </div>
-            <div class="FgMono">
-              <p class="text-blue-600 font-medium">Firstname</p>
-              <p class="text-gray-500 text-sm">user-email@example.com</p>
-            </div>
-          </div>
-          <div
-            class="cursor-pointer size-7 flex items-center justify-center"
-            (click)="togglePopupList($event)"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="lucide lucide-ellipsis-vertical-icon lucide-ellipsis-vertical"
+            <div
+              class="cursor-pointer size-7 items-center justify-center flex"
+              (click)="togglePopupList($event)"
             >
-              <circle cx="12" cy="12" r="1" />
-              <circle cx="12" cy="5" r="1" />
-              <circle cx="12" cy="19" r="1" />
-            </svg>
-          </div>
-          <div
-            [class.hidden]="!popupListOpen()"
-            class="absolute bg-white bottom-full right-0 mb-1 flex flex-col text-sm FgMono"
-          >
-            <a href="" class="p-4 flex items-center gap-1.5">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="18"
@@ -106,67 +99,92 @@
                 stroke-width="1.5"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                class="lucide lucide-user-round-icon lucide-user-round text-gray-500"
+                class="lucide lucide-ellipsis-vertical-icon lucide-ellipsis-vertical"
               >
-                <circle cx="12" cy="8" r="5" />
-                <path d="M20 21a8 8 0 0 0-16 0" />
+                <circle cx="12" cy="12" r="1" />
+                <circle cx="12" cy="5" r="1" />
+                <circle cx="12" cy="19" r="1" />
               </svg>
-              <span class="">Account</span>
-            </a>
-            <a href="" class="p-4 flex items-center gap-1.5">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="lucide lucide-cog-icon lucide-cog text-gray-500"
-              >
-                <path d="M11 10.27 7 3.34" />
-                <path d="m11 13.73-4 6.93" />
-                <path d="M12 22v-2" />
-                <path d="M12 2v2" />
-                <path d="M14 12h8" />
-                <path d="m17 20.66-1-1.73" />
-                <path d="m17 3.34-1 1.73" />
-                <path d="M2 12h2" />
-                <path d="m20.66 17-1.73-1" />
-                <path d="m20.66 7-1.73 1" />
-                <path d="m3.34 17 1.73-1" />
-                <path d="m3.34 7 1.73 1" />
-                <circle cx="12" cy="12" r="2" />
-                <circle cx="12" cy="12" r="8" />
-              </svg>
-              <span class="">Dashboard</span>
-            </a>
-            <a href="" class="p-4 flex items-center gap-1.5">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.75"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="lucide lucide-log-out-icon lucide-log-out text-red-400"
-              >
-                <path d="m16 17 5-5-5-5" />
-                <path d="M21 12H9" />
-                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-              </svg>
-              <span class="text-red-600">Logout</span>
-            </a>
+            </div>
+            <div
+              [class.hidden]="!popupListOpen()"
+              class="absolute z-1000 bg-white bottom-full right-0 lg:translate-0 translate-x-12 mb-1 flex flex-col text-sm FgMono"
+            >
+              <a href="" class="p-4 flex items-center gap-1.5">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="lucide lucide-user-round-icon lucide-user-round text-gray-500"
+                >
+                  <circle cx="12" cy="8" r="5" />
+                  <path d="M20 21a8 8 0 0 0-16 0" />
+                </svg>
+                <span class="">Account</span>
+              </a>
+              <a href="" class="p-4 flex items-center gap-1.5">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="lucide lucide-cog-icon lucide-cog text-gray-500"
+                >
+                  <path d="M11 10.27 7 3.34" />
+                  <path d="m11 13.73-4 6.93" />
+                  <path d="M12 22v-2" />
+                  <path d="M12 2v2" />
+                  <path d="M14 12h8" />
+                  <path d="m17 20.66-1-1.73" />
+                  <path d="m17 3.34-1 1.73" />
+                  <path d="M2 12h2" />
+                  <path d="m20.66 17-1.73-1" />
+                  <path d="m20.66 7-1.73 1" />
+                  <path d="m3.34 17 1.73-1" />
+                  <path d="m3.34 7 1.73 1" />
+                  <circle cx="12" cy="12" r="2" />
+                  <circle cx="12" cy="12" r="8" />
+                </svg>
+                <span class="">Dashboard</span>
+              </a>
+              <button (click)="logout()" class="p-4 flex items-center gap-1.5 cursor-pointer">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.75"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="lucide lucide-log-out-icon lucide-log-out text-red-400"
+                >
+                  <path d="m16 17 5-5-5-5" />
+                  <path d="M21 12H9" />
+                  <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                </svg>
+                <span class="text-red-600">Logout</span>
+              </button>
+            </div>
           </div>
-        </div>
+        }
       </nav>
     </div>
-    <div class="col-span-9">
+
+    <!--  -->
+    <div class="">
       <router-outlet></router-outlet>
     </div>
   </div>

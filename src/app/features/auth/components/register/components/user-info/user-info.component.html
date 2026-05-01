@@ -12,7 +12,7 @@
   </div>
   <h1 class="text-3xl font-bold text-gray-800 Finter mb-4">Create Account</h1>
   <h2 class="text-2xl font-bold text-blue-600 mb-2.5 Finter">Tell us more about you</h2>
-  <form class="FgMono space-y-4">
+  <form class="FgMono space-y-4" (submit)="$event.preventDefault(); handleClick()">
     <div class="flex gap-2.5">
       <div>
         <app-input-field
@@ -66,6 +66,7 @@
         btnColor="text-gray-800"
         icon="fa-solid fa-angle-right"
         iconLocation="right"
+        btnType="submit"
       ></app-d-button>
     </div>
   </form>

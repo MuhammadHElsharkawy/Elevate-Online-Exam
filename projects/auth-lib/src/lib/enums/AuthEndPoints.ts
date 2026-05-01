@@ -1,8 +1,17 @@
+import { inject, Injectable } from "@angular/core";
+import { AUTH_API_URL } from "./tokens";
+
+@Injectable({
+  providedIn: 'root'
+})
+
 export class AuthEndPoints {
-    static readonly SendOtpToEmail = 'https://exam-app.elevate-bootcamp.cloud/api/auth/send-email-verification';
-    static readonly ConfirmOtp = 'https://exam-app.elevate-bootcamp.cloud/api/auth/confirm-email-verification';
-    static readonly Register = 'https://exam-app.elevate-bootcamp.cloud/api/auth/register';
-    static readonly Login = 'https://exam-app.elevate-bootcamp.cloud/api/auth/login';
-    static readonly RequestPasswordReset = 'https://exam-app.elevate-bootcamp.cloud/api/auth/forgot-password';
-    static readonly ResetPassword = 'https://exam-app.elevate-bootcamp.cloud/api/auth/reset-password';
+    private readonly _baseURL = inject(AUTH_API_URL)
+
+    readonly SendOtpToEmail = `${this._baseURL}/api/auth/send-email-verification`;
+    readonly ConfirmOtp = `${this._baseURL}/api/auth/confirm-email-verification`;
+    readonly Register = `${this._baseURL}/api/auth/register`;
+    readonly Login = `${this._baseURL}/api/auth/login`;
+    readonly RequestPasswordReset = `${this._baseURL}/api/auth/forgot-password`;
+    readonly ResetPassword = `${this._baseURL}/api/auth/reset-password`;
 }

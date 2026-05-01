@@ -1,0 +1,27 @@
+<div class="flex justify-center">
+  <ng-otp-input
+    (onInputChange)="onOtpChange($event)"
+    [config]="{
+      length: 6,
+      allowNumbersOnly: true,
+      inputStyles: {
+        width: '40px',
+        height: '40px',
+        'border-radius': '0px',
+        'border-color': '#E5E7EB',
+      },
+    }"
+  ></ng-otp-input>
+</div>
+<div class="mt-6 text-center">
+  <p class="text-sm text-gray-500">
+    You can request another code in: {{ timeLeft() }}s
+    <button
+      (click)="$event.preventDefault(); handleResendCode()"
+      [hidden]="timeLeft() > 0"
+      class="cursor-pointer text-blue-600 font-semibold hover:underline disabled:text-gray-400 disabled:no-underline disabled:cursor-not-allowed"
+    >
+      Resend Code
+    </button>
+  </p>
+</div>

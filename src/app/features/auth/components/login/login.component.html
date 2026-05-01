@@ -36,13 +36,18 @@
           >
         </div>
       </div>
+      @if (errMsg()) {
+        <div class="pt-6">
+          <app-error-msg [errorMsg]="errMsg()!"></app-error-msg>
+        </div>
+      }
       <div class="mt-10">
         <div class="mb-9">
           <app-d-button
             [isLooding]="isLooding()"
             [isDisabled]="loginForm.invalid"
             btnText="Login"
-            (btnClick)="login()"
+            btnType="submit"
           ></app-d-button>
         </div>
         <div class="text-center">

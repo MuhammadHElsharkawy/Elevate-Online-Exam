@@ -11,6 +11,8 @@ export class InputFieldComponent {
   private cd = inject(ChangeDetectorRef);
 
   inputId = input.required<string>();
+  isReadOnly = input<boolean>(false);
+  // isDisabled = input<boolean>(false);
   inputType = input<string>();
   inputLabel = input<string>();
   inputPlaceholder = input<string>();

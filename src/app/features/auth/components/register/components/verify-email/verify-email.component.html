@@ -13,7 +13,7 @@
   <h1 class="text-3xl font-bold text-gray-800 Finter mb-4">Create Account</h1>
   <h2 class="text-2xl font-bold text-blue-600 mb-2.5 Finter">Verify OTP</h2>
   <div class="">
-    <form class="FgMono">
+    <form (submit)="$event.preventDefault(); handleSendCode()" class="FgMono">
       <p class="text-gray-500 mb-6.5">
         Please enter the 6-digits code we have sent to:
         <span class="text-gray-800">{{ emailControl().value }} </span>.
@@ -53,6 +53,7 @@
       </div>
       <div class="text-center mt-14">
         <button
+          type="submit"
           [disabled]="isLooding() || codeControl().invalid"
           (click)="$event.preventDefault(); handleSendCode()"
           class="cursor-pointer text-gray-800 text-sm font-medium disabled:opacity-40 disabled:cursor-no-drop"

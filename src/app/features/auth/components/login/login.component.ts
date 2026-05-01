@@ -5,10 +5,11 @@ import { DFormMsgComponent } from "../../../../shared/components/d-form-msg/d-fo
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from 'auth-lib';
+import { ErrorMsgComponent } from "../../../../shared/components/error-msg/error-msg.component";
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, InputFieldComponent, DButtonComponent, DFormMsgComponent, RouterLink],
+  imports: [ReactiveFormsModule, InputFieldComponent, DButtonComponent, DFormMsgComponent, RouterLink, ErrorMsgComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
@@ -30,9 +31,12 @@ export class LoginComponent implements OnInit {
     })
   }
 
+  errMsg: WritableSignal<string | null> = signal(null);
+
   isLooding: WritableSignal<boolean> = signal(false);
   login(): void {
     if (this.loginForm.valid) {
+      this.errMsg.set(null);
       this.isLooding.set(true);
       this._authService.Login(this.loginForm.value).subscribe({
         next: (res) => {
@@ -40,10 +44,10 @@ export class LoginComponent implements OnInit {
           if (typeof res != 'string' && res.token) {
             localStorage.setItem('ExamAppToken', res.token);
           }
-          this._router.navigate(['/main/diplomas']);
+          this._router.navigate(['/main/diplomas-section']);
         },
         error: (err) => {
-          console.log(err);
+          this.errMsg.set(err.error.message);
           this.isLooding.set(false);
         }
       })

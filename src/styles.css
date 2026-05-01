@@ -12,6 +12,9 @@
 .FgMono {
   font-family: 'Geist Mono', monospace;
 }
+.Finter {
+  font-family: "Inter", sans-serif;
+}
 
 input[type='radio'] {
   appearance: none;

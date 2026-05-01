@@ -2,17 +2,23 @@
   <app-d-breadcrumb [bath]="['Diplomas']"></app-d-breadcrumb>
   <section class="p-6 flex flex-col gap-6">
     <app-d-page-heading [svgContent]="graduationIcon" title="Diplomas"></app-d-page-heading>
-    <div class="grid grid-cols-3 grid-rows-2 gap-2.5 grow overflow-hidden min-h-0">
-      @for (item of allDiplomas().slice(0, limit()); track item.id) {
-        <a routerLink="/main/exams" [queryParams]="{ diplomaId: item.id }" class="relative min-h-0">
-          <img class="w-full h-full object-cover" [src]="item.image" [alt]="item.title" />
-          <div
-            class="absolute left-2.5 right-2.5 bottom-2.5 bg-[#155DFCBF] backdrop-blur-md p-4 text-white FgMono"
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-2.5 grow overflow-hidden min-h-0">
+      @if (allDiplomas().length > 0) {
+        @for (item of allDiplomas().slice(0, limit()); track item.id) {
+          <a
+            routerLink="/main/diplomas-section/exams"
+            [queryParams]="{ diplomaId: item.id }"
+            class="relative min-h-0"
           >
-            <h3 class="text-xl font-semibold mb-1">{{ item.title }}</h3>
-            <p class="text-sm">{{ item.description }}</p>
-          </div>
-        </a>
+            <img class="w-full h-112 object-cover" [src]="item.image" [alt]="item.title" />
+            <div
+              class="absolute left-2.5 right-2.5 bottom-2.5 bg-[#155DFCBF] backdrop-blur-md p-4 text-white FgMono"
+            >
+              <h3 class="text-xl font-semibold mb-1">{{ item.title }}</h3>
+              <p class="text-sm">{{ item.description }}</p>
+            </div>
+          </a>
+        }
       }
     </div>
     <button

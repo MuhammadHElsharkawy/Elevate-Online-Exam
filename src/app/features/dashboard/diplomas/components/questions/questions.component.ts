@@ -14,6 +14,8 @@ import { IResults } from '../../modules/results/results.interface';
 import { DonutChartComponent } from "../../../../../shared/components/donut-chart/donut-chart.component";
 import { ExamsService } from '../../services/exams/exams.service';
 import { IExams } from '../../modules/exams/exams.interface';
+import { IDiploma } from '../../modules/diplomas/diplomas.interface';
+import { DiplomasService } from '../../services/diplomas/diplomas.service';
 
 @Component({
   selector: 'app-questions',
@@ -28,6 +30,7 @@ export class QuestionsComponent implements OnDestroy {
   private readonly _fb = inject(FormBuilder);
   private readonly _platformid = inject(PLATFORM_ID);
   private readonly _examsService = inject(ExamsService);
+  private readonly _diplomasService = inject(DiplomasService);
 
   ngOnInit(): void {
     this._activatedRoute.queryParams.subscribe(params => {
@@ -63,6 +66,7 @@ export class QuestionsComponent implements OnDestroy {
 
   examId: WritableSignal<string> = signal('');
   currentExam: WritableSignal<IExams | null> = signal(null);
+  currentDiploma: WritableSignal<IDiploma | null> = signal(null);
   examQuestions: WritableSignal<IQuestions[]> = signal([]);
   currentQuestionIndex: WritableSignal<number> = signal(0);
   currentQuestion = computed(() => this.examQuestions()[this.currentQuestionIndex()]);
@@ -89,8 +93,6 @@ export class QuestionsComponent implements OnDestroy {
     if (isPlatformBrowser(this._platformid)) {
       localStorage.setItem(`exam_ans_${this.examId()}`, JSON.stringify(this.userAnswers()))
     }
-
-    console.log(this.userAnswers());
   }
 
   nextQuestion(): void {
@@ -106,6 +108,9 @@ export class QuestionsComponent implements OnDestroy {
     }
   }
 
+  startExamTime(): string {
+    return new Date().toISOString();
+  }
   GetExamQuestions(examId: string): void {
     this._questionsService.GetAllQuestionsForExams(examId).subscribe({
       next: (res) => {
@@ -139,7 +144,7 @@ export class QuestionsComponent implements OnDestroy {
     const body = {
       examId: this.examId(),
       answers: formattedAnswers,
-      startedAt: "2026-04-19T19:43:11.215Z"
+      startedAt: this.startExamTime()
     };
 
     this.submitExamQuestions(body);
@@ -147,13 +152,12 @@ export class QuestionsComponent implements OnDestroy {
 
   results: WritableSignal<IResults | null> = signal(null);
   submitExamQuestions(data: AnswersREQ): void {
+    this.submitLoading.set(true);
     if (this.isAllQuestionsAnswered()) {
-      this.submitLoading.set(true);
       this._submissionsService.SubmitExam(data).subscribe({
         next: (res) => {
-          console.log(res);
-          
           this.results.set(res);
+          console.log(this.results());
           this.submitLoading.set(false);
           this.showResults.set(true);
         },
@@ -162,9 +166,9 @@ export class QuestionsComponent implements OnDestroy {
           console.log(err);
         }
       })
-    } else {
-      this.showResults.set(true);
     }
+    else
+      this.showResults.set(true);
   }
 
   ngOnDestroy(): void {

@@ -3,10 +3,11 @@ import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule } from '@a
 import { InputFieldComponent } from "../../../../../../shared/components/input-field/input-field.component";
 import { DButtonComponent } from "../../../../../../shared/components/d-button/d-button.component";
 import { DFormMsgComponent } from "../../../../../../shared/components/d-form-msg/d-form-msg.component";
+import { ErrorMsgComponent } from "../../../../../../shared/components/error-msg/error-msg.component";
 
 @Component({
   selector: 'app-email',
-  imports: [ReactiveFormsModule, InputFieldComponent, DButtonComponent, DFormMsgComponent],
+  imports: [ReactiveFormsModule, InputFieldComponent, DButtonComponent, DFormMsgComponent, ErrorMsgComponent],
   templateUrl: './email.component.html',
   styleUrl: './email.component.css',
 })

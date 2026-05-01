@@ -1,5 +1,5 @@
 <main class="bg-gray-50">
-  <app-d-breadcrumb [bath]="['Diplomas', 'Frontend Development', 'Exams']"></app-d-breadcrumb>
+  <app-d-breadcrumb [bath]="['Diplomas', currentDiploma()?.title!, 'Exams']"></app-d-breadcrumb>
   <section class="p-6 flex flex-col gap-6">
     <app-d-page-heading
       [svgContent]="bookIcon"
@@ -9,9 +9,9 @@
     <div class="bg-white p-6 flex flex-col gap-6 FgMono">
       @for (exam of ExamsList(); track exam.id) {
         <a
-          routerLink="/main/questions"
+          routerLink="/main/diplomas-section/questions"
           [queryParams]="{ examId: exam.id }"
-          class="relative p-4 flex gap-4 bg-blue-50 hover:border-dashed hover:border hover:border-blue-200 transition-all group"
+          class="relative p-4 flex flex-col md:flex-row items-center gap-4 bg-blue-50 hover:border-dashed hover:border hover:border-blue-200 transition-all group"
         >
           <div
             class="absolute bottom-2.5 right-2.5 bg-blue-600 text-white flex items-center gap-2.5 px-2.5 py-1.5 text-sm FgMono opacity-0 group-hover:opacity-100 transition"
@@ -39,7 +39,7 @@
             <img class="w-3/4" [src]="exam.image" [alt]="exam.title" />
           </div>
           <div class="space-y-1.5 grow">
-            <div class="flex items-center justify-between">
+            <div class="flex items-center justify-between flex-col xl:flex-row">
               <h3 class="text-xl font-semibold text-blue-600">{{ exam.title }}</h3>
               <div class="flex items-center gap-1.5 text-sm">
                 <div class="flex items-center gap-1.5">

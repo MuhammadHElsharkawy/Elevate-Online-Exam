@@ -3,7 +3,7 @@ import { DonutChartComponent } from "../../../../../shared/components/donut-char
 import { IResults } from '../../modules/results/results.interface';
 import { DButtonComponent } from "../../../../../shared/components/d-button/d-button.component";
 import { Router } from '@angular/router';
-import { isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser, Location } from '@angular/common';
 import { IExams } from '../../modules/exams/exams.interface';
 
 @Component({
@@ -15,6 +15,7 @@ import { IExams } from '../../modules/exams/exams.interface';
 export class ResultsComponent {
   private readonly router = inject(Router)
   private readonly platformid = inject(PLATFORM_ID)
+  private _location = inject(Location);
 
   resultsRes = input<IResults | null>(null);
   currentExam = input<IExams | null>(null);
@@ -43,9 +44,13 @@ export class ResultsComponent {
       .then(() => {
         window.location.reload();
       });
-      if (isPlatformBrowser(this.platformid)) {
-        localStorage.removeItem(`exam_ans_${this.currentExam()?.id}`);
+    if (isPlatformBrowser(this.platformid)) {
+      localStorage.removeItem(`exam_ans_${this.currentExam()?.id}`);
       localStorage.removeItem('last_index');
-      }
+    }
+  }
+
+  goBack(): void {
+    this._location.back();
   }
 }

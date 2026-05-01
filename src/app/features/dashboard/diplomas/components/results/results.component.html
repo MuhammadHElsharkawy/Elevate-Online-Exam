@@ -1,4 +1,4 @@
-<section class="space-y-4">
+<section class="space-y-4 FgMono">
   <h2 class="pt-6 text-2xl font-semibold text-blue-600">Results:</h2>
   @if (resultsRes()) {
     <div class="flex gap-4 h-128.5">
@@ -6,14 +6,16 @@
         <app-donut-chart
           [mainCount]="resultsRes()!.correctAnswers"
           [totalCount]="resultsRes()!.totalQuestions"
+          [size]="203"
+          solid="30px"
         ></app-donut-chart>
         <div class="p-2.5 space-y-2.5">
           <div class="flex items-center gap-2.5">
-            <div class="w-4 h-4 bg-emerald-500"></div>
+            <div class="w-4 h-4 bg-emerald-500 shrink-0"></div>
             <p class="">Correct: {{ resultsRes()!.correctAnswers }}</p>
           </div>
           <div class="flex items-center gap-2.5">
-            <div class="w-4 h-4 bg-red-500"></div>
+            <div class="w-4 h-4 bg-red-500 shrink-0"></div>
             <p class="">Incorrect: {{ resultsRes()!.wrongAnswers }}</p>
           </div>
         </div>
@@ -46,6 +48,7 @@
         btnColor="text-gray-800"
       ></app-d-button>
       <app-d-button
+        (btnClick)="goBack()"
         btnText="Explore"
         [svgContent]="foldersearchicon"
         iconLocation="left"

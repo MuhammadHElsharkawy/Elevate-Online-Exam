@@ -31,5 +31,10 @@
         [isLooding]="isLooding()"
       ></app-password>
     }
+    @if (errMsg()) {
+      <div class="mt-5">
+        <app-error-msg [errorMsg]="errMsg()!"></app-error-msg>
+      </div>
+    }
   </div>
 </section>

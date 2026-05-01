@@ -6,10 +6,11 @@ import { UserInfoComponent } from "./components/user-info/user-info.component";
 import { PasswordComponent } from "./components/password/password.component";
 import { Router } from '@angular/router';
 import { AuthService } from 'auth-lib';
+import { ErrorMsgComponent } from "../../../../shared/components/error-msg/error-msg.component";
 
 @Component({
   selector: 'app-register',
-  imports: [EmailComponent, ɵInternalFormsSharedModule, ReactiveFormsModule, VerifyEmailComponent, UserInfoComponent, PasswordComponent],
+  imports: [EmailComponent, ɵInternalFormsSharedModule, ReactiveFormsModule, VerifyEmailComponent, UserInfoComponent, PasswordComponent, ErrorMsgComponent],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
 })
@@ -42,22 +43,23 @@ export class RegisterComponent {
 
   isLooding: WritableSignal<boolean> = signal(false);
 
+  errMsg: WritableSignal<string | null> = signal(null);
   sendEmail(): void {
     if (this.registerForm.get('email')?.valid) {
       this.isLooding.set(true);
       const data = {
         email: this.registerForm.get('email')?.value
       }
-      console.log(data);
 
+      this.errMsg.set(null);
       this._authService.SendOtpToEmail(data).subscribe({
         next: (res) => {
           console.log(res)
-          this.step.set('code')
+          this.step.set('code');
           this.isLooding.set(false);
         },
         error: (err) => {
-          console.log(err);
+          this.errMsg.set(err.error.message);          
           this.isLooding.set(false);
         }
       })
@@ -98,6 +100,8 @@ export class RegisterComponent {
     }
   }
   createAccount(): void {
+    console.log('CREATE ACCOUNT');
+    
     if (this.registerForm.valid) {
       this.isLooding.set(true);
       const data = {

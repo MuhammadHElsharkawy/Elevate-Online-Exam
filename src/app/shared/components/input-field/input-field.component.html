@@ -9,9 +9,10 @@
   }
   @if (inputType() != 'password') {
     <input
+      [readOnly]="isReadOnly()"
       [id]="inputId()"
       [type]="inputType() || 'text'"
-      class="w-full border p-2.5 placeholder:text-gray-400 placeholder:text-sm"
+      class="w-full border p-2.5 placeholder:text-gray-400 placeholder:text-sm disabled:border-gray-200 disabled:bg-gray-100 disabled:text-gray-600"
       [class.border-gray-200]="!isInValid"
       [class.border-red-600]="isInValid"
       [placeholder]="inputPlaceholder() || ''"
@@ -21,6 +22,7 @@
   @if (inputType() == 'password') {
     <div class="relative">
       <input
+        [readOnly]="isReadOnly()"
         [id]="inputId()"
         [type]="type()"
         class="w-full border p-2.5 placeholder:text-gray-400 placeholder:text-sm"
@@ -29,7 +31,10 @@
         [placeholder]="inputPlaceholder() || ''"
         [formControl]="formControl"
       />
-      <div (click)="toggleShowPassword()" class="absolute top-1/2 right-2.5 -translate-y-1/2 text-gray-400 cursor-pointer">
+      <div
+        (click)="toggleShowPassword()"
+        class="absolute top-1/2 right-2.5 -translate-y-1/2 text-gray-400 cursor-pointer"
+      >
         @if (isPasswordShown()) {
           <svg
             xmlns="http://www.w3.org/2000/svg"

@@ -21,7 +21,8 @@ export class DonutChartComponent implements OnInit {
   mainColor = input<string>('#155DFC');
   secondColor = input<string>('#DBEAFE');
 
-  size = input<number>(45)
+  size = input<number>(45);
+  solid = input<string>('12px');
 
 
   mainCount = input.required<number>()

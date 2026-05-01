@@ -1,16 +1,16 @@
 <main class="bg-gray-50 min-h-screen">
-  <app-d-breadcrumb [bath]="['Diplomas', 'Frontend Development', 'CSS Exam']"></app-d-breadcrumb>
+  <app-d-breadcrumb [bath]="['Diplomas', currentExam()?.title!]"></app-d-breadcrumb>
   <section class="flex flex-col gap-6 p-6">
     <app-d-page-heading
       [svgContent]="questionmarkIcon"
-      [title]="currentExam()?.title"
+      [title]="currentExam()?.title + ' Questions'"
       [withBack]="true"
     ></app-d-page-heading>
     <div class="bg-white p-6 flex flex-col gap-4">
       <div class="flex gap-6">
         <div class="flex flex-col justify-center gap-1.5 grow">
-          <div class="flex justify-between items-center">
-            <p class="">Frontend Development - CSS Quiz</p>
+          <div class="flex justify-between items-center flex-col lg:flex-row">
+            <p class="FgMono">{{currentExam()?.title}}</p>
             <p class="">
               Question <span class="text-blue-600">{{ currentQuestionIndex() + 1 }}</span> of
               {{ examQuestions().length }}
@@ -39,12 +39,12 @@
       </div>
       <!--  -->
       @if (!showResults()) {
-        <p class="pt-6 text-2xl font-semibold text-blue-600">
+        <p class="pt-6 text-2xl font-semibold text-blue-600 FgMono">
           {{ examQuestions()[currentQuestionIndex()]?.question }}
         </p>
         <div class="flex flex-col gap-2.5">
           @for (ch of examQuestions()[currentQuestionIndex()]?.answers; track ch.id) {
-            <label [for]="ch.id" class="custom p-4 flex items-center gap-2.5 bg-gray-50 text-sm">
+            <label [for]="ch.id" class="custom p-4 flex items-center gap-2.5 bg-gray-50 text-sm FgMono">
               <input
                 type="radio"
                 [name]="'Question-' + examQuestions()[currentQuestionIndex()]?.id"
